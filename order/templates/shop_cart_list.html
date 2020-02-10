@@ -1,0 +1,120 @@
+{% extends "homebase.html" %}
+{% load static %}
+
+
+{% block title %} Shop Cart List {% endblock %}
+
+
+{% block body %}
+
+
+    <section id="cart_items">
+        <div class="container">
+            <div class="breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><a href="/">Home</a></li>
+                    <li class="active">Shopping Cart List</li>
+                </ol>
+            </div>
+
+
+
+            <div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="aler alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            </div>
+
+            <div class="col-md-3">
+                <div class="table-responsive cart_info">
+                    {% include 'user_menu.html' %}
+                </div>
+            </div>
+
+
+
+        <div class="col-md-9">
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Id</td>
+                        <td class="">İnfo</td>
+                        <td class="description">Quantity</td>
+                        <td class="price">Price</td>
+                        <td class="quantity">Tutar</td>
+
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for rs in shopcart %}
+                        <tr>
+                            <td class="cart_product">
+                                <h4>{{ rs.product.id }}</h4>
+                            </td>
+
+                            <td class="cart_description">
+                                <h4><a href="/product/{{ rs.product.id }}">{{ rs.product.title }}</a></h4>
+                                <p>{{ rs.product.description }}</p>
+                            </td>
+
+                            <td class="cart_description">
+                                <h4><a href="">{{ rs.quantity }}</a></h4>
+                                <p></p>
+                            </td>
+                            <td class="cart_price">
+                                <p>{{ rs.product.price }}₺</p>
+                            </td>
+
+                            <td class="cart_total">
+                                <p class="cart_total_price">{{ rs.amount }}₺</p>
+                            </td>
+                            <td class="cart_delete">
+                                <a class="cart_quantity_delete" href="/order/deletefromcart/{{ rs.id }}"><i
+                                        class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-responsive cart_info">
+
+                <table class="table table-condensed">
+                    <thead>
+                    <tr class="cart_menu">
+                        <td class="pull-right">Total</td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <p class="pull-right">{{ carttotal }}₺</p>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="pull-right">
+                    <div class="total_area">
+                        <a class="btn btn-default check_out" href="/order/checkout">Check Out</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </section> <!--/#cart_items-->
+
+
+
+{% endblock %}

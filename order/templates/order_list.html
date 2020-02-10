@@ -1,0 +1,74 @@
+{% extends "homebase.html" %}
+{% load static %}
+
+
+{% block title %} Shop Cart List {% endblock %}
+
+
+{% block body %}
+
+
+    <section id="cart_items">
+        <div class="container">
+            <div class="breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><a href="/">Home</a></li>
+                    <li class="active">Check out</li>
+                </ol>
+            </div><!--/breadcrums-->
+
+            <div class="col-md-3">
+                <div class="table-responsive cart_info">
+                    {% include 'user_menu.html' %}
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="shopper-informations">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="aler alert-{{ message.tags }}" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class="order-summary clearfix">
+
+                        <div class="section-title">
+                            <h3 class="title">My Orders</h3>
+                        </div>
+                        <table class="shopping-cart-table table">
+                            <thead>
+                            <tr>
+                                <th>Name & Surname</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">City</th>
+                                <th class="text-center">Phone</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Detail</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for rs in orders %}
+                                <tr>
+                                    <td class="details"><strong>{{ rs.name }} {{ rs.surname }}</strong></td>
+                                    <td class="price text-center">{{ rs.create_at }}</td>
+                                    <td class="price text-center">{{ rs.phone }}</td>
+                                    <td class="qty text-center">{{ rs.city }}</td>
+                                    <td class="total text-center"><strong class="primary-color">₺{{ rs.total }}</strong></td>
+                                    <td class="total text-center">{{ rs.status }}</td>
+                                    <td class="text-right"><a href="/order/detail/{{ rs.id }}"><strong>Detail</strong></a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

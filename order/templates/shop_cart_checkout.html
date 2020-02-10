@@ -1,0 +1,121 @@
+{% extends "homebase.html" %}
+{% load static %}
+
+
+{% block title %} Shop Cart List {% endblock %}
+
+
+{% block body %}
+
+
+
+    <section id="cart_items">
+        <div class="container">
+            <div class="breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><a href="/">Home</a></li>
+                    <li class="active">Check out</li>
+                </ol>
+            </div><!--/breadcrums-->
+
+            <div class="col-md-3">
+                <div class="table-responsive cart_info">
+                    {% include 'user_menu.html' %}
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="shopper-informations">
+                    <div class="row">
+
+                        <div class="col-sm-9 clearfix">
+                            <form id="checkout-form" name="order" class="clearfix"  method="post">
+                            <div class="bill-to">
+
+                                {% csrf_token %}
+                                <div class="form-one">
+                                    <p>ORDER DETAILS</p>
+
+                                        <input class="input" type="text" name="name" placeholder="First Name" required id="id_name" value="{{ user.first_name }}">
+                                        <input class="input" type="text" name="surname" placeholder="Last Name" required id="id_surname" value="{{ user.last_name }}">
+                                        <input class="input" type="text" name="address" placeholder="Address" required id="id_address">
+                                        <input class="input" type="text" name="city" placeholder="City" required id="id_city">
+                                        <input class="input" type="text" name="phone" placeholder="Telephone" required id="id_phone">
+
+                                </div>
+
+                                <div class="form-two">
+                                    <p>BILLING DETAILS</p>
+
+                                        <input type="text" placeholder="Card Holder Name">
+                                        <input type="password" placeholder="Card Number">
+                                        <input type="text" placeholder="Date mm/yy">
+                                        <input type="text" placeholder="Code">
+                                        <input type="input" value="Order Total : ₺{{ carttotal }}" readonly>
+                                        <button type="submit" class="btn btn-default check_out">Complate Order</button>
+
+                                </div>
+
+                            </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="review-payment">
+                <h2>Review & Payment</h2>
+            </div>
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Id</td>
+                        <td class="">İnfo</td>
+                        <td class="description">Quantity</td>
+                        <td class="price">Price</td>
+                        <td class="quantity">Tutar</td>
+
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for rs in shopcart %}
+                        <tr>
+                            <td class="cart_product">
+                                <h4>{{ rs.product.id }}</h4>
+                            </td>
+
+                            <td class="cart_description">
+                                <h4><a href="/product/{{ rs.product.id }}">{{ rs.product.title }}</a></h4>
+                                <p>{{ rs.product.description }}</p>
+                            </td>
+
+                            <td class="cart_description">
+                                <h4><a href="">{{ rs.quantity }}</a></h4>
+                                <p></p>
+                            </td>
+                            <td class="cart_price">
+                                <p>{{ rs.product.price }}₺</p>
+                            </td>
+
+                            <td class="cart_total">
+                                <p class="cart_total_price">{{ rs.amount }}₺</p>
+                            </td>
+                            <td class="cart_delete">
+                                <a class="cart_quantity_delete" href="/order/deletefromcart/{{ rs.id }}"><i
+                                        class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section> <!--/#cart_items-->
+
+{% endblock %}

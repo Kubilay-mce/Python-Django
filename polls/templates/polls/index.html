@@ -1,0 +1,44 @@
+
+{% extends "homebase.html" %}
+
+{% block title %}Anket Sayfası{% endblock %}
+
+
+{% block body %}
+
+     <!-- BREADCRUMB -->
+	<div id="breadcrumb">
+		<div class="container">
+			<ul class="breadcrumb">
+				<li><a href="/">Home</a></li>
+				<li class="active">Anket Sayfası</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /BREADCRUMB -->
+
+    <div id="contact-page" class="container">
+        <div class="bg">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="contact-form">
+                        Anket Soruları<br>
+                        {% if latest_question_list %}
+                            <ul>
+                                {% for question in latest_question_list %}
+                                    <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No polls are available.</p>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--/#contact-page-->
+{% endblock %}
+
+

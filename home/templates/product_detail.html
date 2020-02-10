@@ -1,0 +1,35 @@
+
+<section id="cart_items">
+		<div class="container">
+			<div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="#">Home</a></li>
+				  <li class="active">Shopping Cart</li>
+				</ol>
+			</div>
+			<div class="table-responsive cart_info">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="aler alert-{{ message.tags }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="product-btns">
+                    <form action="/order/addtocart{{ product.id }}" method="post">
+                        {% csrf_token %}
+                        <div class="qty-input">
+
+                            {{ form.as_p }}
+
+                        </div>
+
+
+                        <input type="submit" class="primary-btn add-to-cart" value="Sepete Ekle">
+                    </form>
+                </div>
+
+			</div>
+		</div>
+	</section> <!--/#cart_items-->
